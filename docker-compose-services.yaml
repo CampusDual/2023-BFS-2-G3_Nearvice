@@ -1,0 +1,20 @@
+version: '3.4'
+x-var:
+  - &DATABASE_USERNAME testuser
+  - &DATABASE_PASSWORD testuser
+volumes:
+  cd2023bfs2g3-db-vol:
+services:
+  database:
+    image: bitnami/postgresql:11.14.0-debian-10-r21
+    environment:
+      POSTGRESQL_DATABASE: cd2023bfs2g3
+      POSTGRESQL_USERNAME: *DATABASE_USERNAME
+      POSTGRESQL_PASSWORD: *DATABASE_PASSWORD
+      POSTGRESQL_POSTGRES_PASSWORD: postgrespwd
+    hostname: db.cd2023bfs2g3
+    container_name: cd2023bfs2g3-db
+    ports:
+      - "5432:5432"
+    volumes:
+      - cd2023bfs2g3-db-vol:/bitnami/postgresql
