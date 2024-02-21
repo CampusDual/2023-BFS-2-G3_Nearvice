@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<JdbcEntitySetup
+    xmlns="http://www.ontimize.com/schema/jdbc"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.ontimize.com/schema/jdbc http://www.ontimize.com/schema/jdbc/ontimize-jdbc-dao.xsd"
+    catalog=""  table="CONVERSATIONS"
+    datasource="mainDataSource" sqlhandler="dbSQLStatementHandler">
+    <DeleteKeys>
+        <Column>C_ID</Column>
+    </DeleteKeys>
+    <UpdateKeys>
+        <Column>C_ID</Column>
+    </UpdateKeys>
+    <GeneratedKey>c_id</GeneratedKey>
+    <Queries>
+        <Query id="allDetailConversations">
+            <AmbiguousColumns>
+                <AmbiguousColumn name="C_ID" prefix="C"/>
+                <AmbiguousColumn name="A_ID" prefix="A"/>
+                <AmbiguousColumn name="USER_" prefix="U"/>
+            </AmbiguousColumns>
+            <Sentence>
+                <![CDATA[
+                        SELECT
+                            #COLUMNS#
+                        FROM MESSAGES M
+                        INNER JOIN CONVERSATIONS C ON M.C_ID = C.C_ID
+                        INNER JOIN ANNOUNCES A ON C.A_ID = A.A_ID
+                        INNER JOIN TUSER U ON U.USER_ = A.USER_
+                        #WHERE#
+                ]]>
+            </Sentence>
+        </Query>
+        <Query id="detailConversations">
+            <AmbiguousColumns>
+                <AmbiguousColumn name="A_ID" prefix="A"/>
+                <AmbiguousColumn name="USER_" prefix="U"/>
+            </AmbiguousColumns>
+            <Sentence>
+                <![CDATA[
+                        SELECT
+                            #COLUMNS#
+                        FROM CONVERSATIONS C
+                        INNER JOIN ANNOUNCES A ON C.A_ID = A.A_ID
+                        INNER JOIN TUSER U ON U.USER_ = A.USER_
+                        INNER JOIN SERVICES S ON S.S_ID = A.S_ID
+                        #WHERE#
+                ]]>
+            </Sentence>
+        </Query>
+        <Query id="lastConversationMessages">
+            <AmbiguousColumns>
+                <AmbiguousColumn name="C_ID" prefix="C"  />
+                <AmbiguousColumn name="A_ID" prefix="A"  />
+                <AmbiguousColumn name="USER_" prefix="U" />
+                <AmbiguousColumn name="M_ID" prefix="M"  />
+                <AmbiguousColumn name="S_ID" prefix="S"  />
+            </AmbiguousColumns>
+            <Sentence>
+                <![CDATA[
+                    WITH TEMPORAL AS (
+                        SELECT MAX(M.M_ID) AS M_ID
+                        FROM MESSAGES M
+                        GROUP BY M.C_ID
+                    )
+                    SELECT
+                        #COLUMNS#
+                    FROM TEMPORAL T
+                    INNER JOIN MESSAGES M ON T.M_ID = M.M_ID
+                    INNER JOIN CONVERSATIONS C ON M.C_ID = C.C_ID
+                    INNER JOIN ANNOUNCES A ON C.A_ID = A.A_ID
+                    INNER JOIN TUSER U ON U.USER_ = A.USER_
+                    INNER JOIN SERVICES S ON S.S_ID = A.S_ID
+                    #WHERE#
+                ]]>
+            </Sentence>
+        </Query>
+        <Query id="conversationFinishedService">
+            <AmbiguousColumns>
+                <AmbiguousColumn name="C_ID" prefix="C"  />
+            </AmbiguousColumns>
+            <Sentence>
+                <![CDATA[
+                    WITH TEMPORAL AS (
+                        SELECT C.C_ID
+                        FROM CONVERSATIONS C
+                        WHERE C.C_END_DATETIME != NULL
+                    )
+                    SELECT
+                        #COLUMNS#
+                    FROM CONVERSATIONS C
+                    INNER JOIN TEMPORAL T ON T.C_ID = C.C_ID
+                    #WHERE#
+                ]]>
+            </Sentence>
+        </Query>
+    </Queries>
+</JdbcEntitySetup>

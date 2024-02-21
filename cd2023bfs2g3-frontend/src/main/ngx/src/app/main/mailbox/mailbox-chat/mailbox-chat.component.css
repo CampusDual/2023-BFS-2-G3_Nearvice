@@ -1,0 +1,141 @@
+/* Estilo del contenedor de los mensajes */
+.chatContainer {
+	display: flex;
+	flex-direction: column;
+	min-height: calc(100vh - 305px);
+}
+
+/* Estilo del cuerpo del mensaje receptor */
+.chatMessage {
+	background-color: #f5f5f5;
+	border: 1px solid #bbbbbb;
+	border-radius: 2px 10px 10px 10px;
+	padding: 10px;
+	margin: 10px;
+	max-width: 50%;
+	align-self: flex-start;
+	box-shadow: inset 0px 0px 5px rgba(0, 0, 0, 0.2);
+}
+
+/* Estilo del cuerpo del mensaje emisor */
+.meChatMessage {
+	background-color: #ebf7f3;
+	border: 1px solid #bbbbbb;
+	border-radius: 10px 2px 10px 10px;
+	padding: 10px;
+	margin: 10px;
+	max-width: 50%;
+	align-self: flex-end;
+	box-shadow: inset 0px 0px 5px rgba(0, 0, 0, 0.2);
+}
+
+/* Estilo de la fecha del mensaje */
+.dateTimeChat {
+	font-size: 12px;
+	color: #666;
+	padding: 10px 0 0 0;
+}
+
+/* Estilo del nombre de usuario */
+.userChat {
+	font-weight: bold;
+	color: #0074a2;
+}
+
+/* Estilo del texto del mensaje */
+.messageChat {
+	font-size: 16px;
+	margin-top: 5px;
+}
+
+.formChat {
+	display: flex;
+	flex-direction: row;
+	padding: 0;
+	background-color: #f5f5f5;
+	position: sticky;
+	border-radius: 5px;
+	border: 1px solid #e0e0e0;
+	bottom: 0;
+	justify-content: center;
+}
+
+.cont-btn {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.btn-style {
+	color: black;
+	background-color: #b0d5e6;
+	border-radius: 10px;
+	width: auto;
+	margin-left: 25px;
+	margin-right: 25px;
+}
+
+.btn-style:hover {
+	background-color: #b0d5e6;
+	box-shadow: 0px 2px 15px rgba(0, 0, 0, 0.3);
+}
+
+.custom-container {
+	display: flex;
+	align-items: center;
+	border-radius: 10px;
+	background-color: #ffffff;
+	padding: 10px;
+	box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+}
+
+.chatHeader {
+	display: flex;
+	flex-direction: column;
+}
+
+.chatHeader div {
+	margin-left: 30px;
+	margin-bottom: 5px;
+}
+
+.chatHeaderButtons {
+	display: flex;
+	flex-direction: row;
+	align-items: baseline;
+	margin-left: auto;
+}
+
+.messageAndBtn {
+	display: flex;
+	flex-direction: row;
+}
+
+.textInputMessage {
+	width: 90%;
+}
+
+.my-chat-messages-styles {
+	background-color: #ebf7f3;
+	border: 1px solid #bbbbbb;
+	border-radius: 10px 2px 10px 10px;
+	padding: 10px;
+	margin: 10px;
+	max-width: 80%;
+	align-self: flex-end;
+	box-shadow: inset 0px 0px 5px rgba(0, 0, 0, 0.2);
+}
+.chat-messages-styles {
+	background-color: #ffffff;
+	border: 1px solid #bbbbbb;
+	border-radius: 2px 10px 10px 10px;
+	padding: 10px;
+	margin: 10px;
+	max-width: 80%;
+	align-self: flex-start;
+	box-shadow: inset 0px 0px 5px rgba(0, 0, 0, 0.2);
+}
+
+#archiveButton {
+	background-color: #ff6961;
+}

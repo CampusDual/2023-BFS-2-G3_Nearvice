@@ -1,0 +1,28 @@
+<o-table *ngIf="showServicesTable; else myFirstService" attr="myServicesTable"
+	columns="S_NAME;A_TITLE;A_ACTIVE;CONVERSATIONS_COUNT;AGREEMENTS_COUNT;ACCEPTED_AGREEMENTS_COUNT;DECLINED_AGREEMENTS_COUNT"
+	visible-columns="S_NAME;A_TITLE;A_ACTIVE;CONVERSATIONS_COUNT;AGREEMENTS_COUNT;ACCEPTED_AGREEMENTS_COUNT;DECLINED_AGREEMENTS_COUNT"
+	service="announces" entity="agreementsConversationsAnnounces" keys="A_ID" delete-button="no"
+	pagination-controls="no" (onDataLoaded)="getData($event)">
+	<o-table-column attr="S_NAME" title="S_NAME" type="translate"></o-table-column>
+	<o-table-column attr="A_TITLE" title="A_TITLE" multiline="yes" tooltip="yes"></o-table-column>
+	<o-table-column attr="A_ACTIVE" title="A_ACTIVE" type="boolean" true-value="true" false-value="false"
+		boolean-type="text" render-type="icon" render-true-value="check_circle"
+		render-false-value="highlight_off"></o-table-column>
+	<o-table-column attr="CONVERSATIONS_COUNT" title="CONVERSATIONS_COUNT"></o-table-column>
+	<o-table-column attr="AGREEMENTS_COUNT" title="AGREEMENTS_COUNT"></o-table-column>
+	<o-table-column #acceptedAgreements attr="ACCEPTED_AGREEMENTS_COUNT"
+		title="ACCEPTED_AGREEMENTS_COUNT"></o-table-column>
+	<o-table-column #declinedAgreements attr="DECLINED_AGREEMENTS_COUNT"
+		title="DECLINED_AGREEMENTS_COUNT"></o-table-column>
+</o-table>
+<ng-template #myFirstService>
+	<div class="noService">
+		<h3 class="title">{{ "NO_SERVICES_MESSAGE" | oTranslate }}</h3>
+
+		<img class="idk" src="assets/images/idk.png" />
+
+		<button (click)="goToNewService()" class="myFirstServiceButton">
+			<span>{{ "NEW_SERVICE" | oTranslate }}</span>
+		</button>
+	</div>
+</ng-template>

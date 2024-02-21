@@ -1,0 +1,47 @@
+.o-form {
+	background-color: #fff;
+	border: 1px solid #ccc;
+	border-radius: 8px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+	padding: 20px;
+	max-width: 90%;
+	height: auto;
+	margin: 0 auto;
+	margin-top: 25px;
+}
+
+.o-integer-input,
+.o-combo,
+.o-text-input,
+.o-textarea-input,
+.o-checkbox {
+	margin-bottom: 15px;
+}
+
+.o-integer-input,
+.o-text-input,
+.o-textarea-input {
+	width: 100%;
+}
+
+.o-form-toolbar-button-insert {
+	background-color: #007bff;
+	color: #fff;
+	border: none;
+	padding: 10px 20px;
+	border-radius: 4px;
+	cursor: pointer;
+}
+.mapDetailService {
+	z-index: 1;
+	display: flex;
+	height: 400px;
+	width: 100%;
+	align-self: center;
+	overflow: hidden;
+	border-radius: 15px;
+	border: 3px solid #ffc847;
+}
+.marker {
+	z-index: 2;
+}

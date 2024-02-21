@@ -1,0 +1,38 @@
+<o-form service="agreements" entity="agreementLastId" parent-keys="C_ID" columns="AG_ID;AG_ACCEPTED;C_ID"
+	show-header="no" (onDataLoaded)="onDataLoaded($event)">
+	<o-integer-input attr="C_ID" hidden></o-integer-input>
+	<o-integer-input attr="AG_ID" hidden></o-integer-input>
+	<o-text-input attr="AG_ACCEPTED" hidden></o-text-input>
+	<div *ngIf="
+			(!agreement || accepted == false) && !viewOfferClient && dataIsLoaded;
+			else sendOfferProfessionalButton
+		">
+		<button class="btn-style" color="primary" mat-stroked-button="" type="button" ng-reflect-color="primary"
+			(click)="openAgreementFormNew()">
+			<span class="mat-button-wrapper">
+				<span class="ng-star-inserted">{{ "SEND_OFFER" | oTranslate }}</span>
+			</span>
+		</button>
+	</div>
+
+	<ng-template #sendOfferProfessionalButton>
+		<div *ngIf="!viewOfferClient && dataIsLoaded; else viewOfferClientButton">
+			<button class="btn-style" color="primary" mat-stroked-button="" type="button" ng-reflect-color="primary"
+				(click)="openAgreementFormDetail()">
+				<span class="mat-button-wrapper">
+					<span class="ng-star-inserted">{{ "AGREEMENT_DETAIL" | oTranslate }}</span>
+				</span>
+			</button>
+		</div>
+	</ng-template>
+	<ng-template #viewOfferClientButton>
+		<div *ngIf="agreement">
+			<button class="btn-style" color="primary" mat-stroked-button="" type="button" ng-reflect-color="primary"
+				(click)="openAgreementFormDetailClient()">
+				<span class="mat-button-wrapper">
+					<span class="ng-star-inserted">{{ "AGREEMENT_DETAIL" | oTranslate }}</span>
+				</span>
+			</button>
+		</div>
+	</ng-template>
+</o-form>

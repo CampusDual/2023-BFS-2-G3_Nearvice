@@ -1,15 +1,17 @@
 package com.campusdual.cd2023bfs2g3.ws.core.rest;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.campusdual.cd2023bfs2g3.openapi.core.service.ITestApi;
-
 @RestController
-public class TestRestController implements ITestApi {
+@RequestMapping("/test")
+public class TestRestController {
 
-	@Override
+	@RequestMapping(value = "/test", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<String> testRest() {
 		return new ResponseEntity<>("It Works!", HttpStatus.OK);
 	}

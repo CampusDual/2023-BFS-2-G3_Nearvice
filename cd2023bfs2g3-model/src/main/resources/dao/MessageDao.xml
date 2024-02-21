@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<JdbcEntitySetup
+        xmlns="http://www.ontimize.com/schema/jdbc"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.ontimize.com/schema/jdbc http://www.ontimize.com/schema/jdbc/ontimize-jdbc-dao.xsd"
+        catalog=""  table="MESSAGES"
+        datasource="mainDataSource" sqlhandler="dbSQLStatementHandler">
+    <DeleteKeys>
+        <Column>M_ID</Column>
+    </DeleteKeys>
+    <UpdateKeys>
+        <Column>M_ID</Column>
+    </UpdateKeys>
+    <Queries>
+        <Query id="allDetailMessages">
+            <Sentence>
+                    <![CDATA[
+                    WITH TEMPORAL AS (
+                        SELECT
+                            M.M_MESSAGE, M.U_EMITTER,C.C_ID,A.A_ID,A.USER_,M.M_ID,M.M_DATETIME
+                        FROM MESSAGES M
+                        INNER JOIN CONVERSATIONS C ON M.C_ID = C.C_ID
+                        INNER JOIN ANNOUNCES A ON C.A_ID = A.A_ID
+                        INNER JOIN TUSER U ON U.USER_ = A.USER_
+                    )
+                    SELECT #COLUMNS#
+                    FROM TEMPORAL
+                    #WHERE#
+                ]]>
+            </Sentence>
+        </Query>
+    </Queries>
+</JdbcEntitySetup>

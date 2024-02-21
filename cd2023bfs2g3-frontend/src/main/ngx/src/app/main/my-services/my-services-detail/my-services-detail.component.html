@@ -1,0 +1,224 @@
+<div class="serviceDetailContainer">
+	<o-form
+		#formServiceDetail
+		service="announces"
+		entity="announce"
+		keys="A_ID"
+		header-actions="D"
+		undo-button="no"
+		(onDataLoaded)="formInit($event)"
+		message-service-type="myServicesDetailMessageService"
+		label-header="SERVICE_DETAIL"
+		label-header-align="start"
+		keys-sql-types="INTEGER">
+		<o-integer-input attr="A_ID" hidden></o-integer-input>
+		<div class="serviceDetailEditableContainer">
+			<o-row>
+				<div class="data" fxFlex="60" id="serviceDetailFormData">
+					<o-combo
+						attr="S_ID"
+						label="S_NAME"
+						service="services"
+						entity="service"
+						columns="S_ID;S_NAME"
+						filter="no"
+						value-column="S_ID"
+						visible-columns="S_NAME"
+						required="true"
+						read-only="false"
+						searchable="yes"
+						translate="yes"
+						null-selection="yes"
+						null-selection-label="{{ 'SHOW_ALL' | oTranslate }}"></o-combo>
+					<o-text-input attr="A_TITLE"></o-text-input>
+					<o-textarea-input attr="A_DESCRIPTION" rows="10"></o-textarea-input>
+					<o-checkbox attr="A_ACTIVE"></o-checkbox>
+				</div>
+
+				<div>
+					<o-real-input attr="A_LATITUDE" max-decimal-digits="10" hidden></o-real-input>
+					<o-real-input attr="A_LONGITUDE" max-decimal-digits="10" hidden></o-real-input>
+				</div>
+				<div
+					fxFlex="100"
+					fxFlex.md="100"
+					*ngIf="hasGPSPosition()"
+					class="serviceDetailMapContainer">
+					<span>{{ "LOCATION" | oTranslate }}</span>
+					<o-map
+						#oMapMarker
+						fxflex
+						[center]="getPositionGPS()"
+						class="mapDetailService"
+						zoom="12"
+						min-zoom="3"
+						max-zoom="20"
+						zoom-control="no"
+						search-control="false"
+						(onClick)="onMapClick($event)"
+						search-control-button-visible="false"
+						layer-panel-visible="no">
+						<o-map-layer
+							#oMarker
+							class="marker"
+							draggable="true"
+							layer-type="marker"
+							layer-id="location_marker"
+							[layer-center]="getPositionGPS()"></o-map-layer>
+					</o-map>
+				</div>
+			</o-row>
+		</div>
+		<div class="percentageContainer">
+			<o-row>
+				<div class="percentageDiv">
+					<o-form
+						show-header="no"
+						(onDataLoaded)="dataLoaded($event)"
+						service="announces"
+						entity="agreementsConversationsAnnounces"
+						parent-keys="A_ID"
+						keys-sql-types="INTEGER"
+						keys="A_ID"
+						columns="A_ID; AGREEMENTS_COUNT; ACCEPTED_AGREEMENTS_COUNT; DECLINED_AGREEMENTS_COUNT; CONVERSATIONS_COUNT"
+						class="percentageAccepted">
+						<div class="form-column">
+							<div>
+								<label class="percentageTitle">
+									{{ "ACCEPTED_AGREEMENTS_PERCENTAGE" | oTranslate }}
+								</label>
+								<br />
+								<label id="campo1" class="percentageLabel">
+									{{ acc_ags }}
+								</label>
+								<br />
+								<label id="percentageText" class="percentageLabel">
+									({{ acceptedAgreementsPercentage }}%)
+								</label>
+							</div>
+						</div>
+					</o-form>
+				</div>
+				<div class="percentageDiv">
+					<o-form
+						show-header="no"
+						(onDataLoaded)="dataLoaded($event)"
+						service="announces"
+						entity="agreementsConversationsAnnounces"
+						parent-keys="A_ID"
+						keys-sql-types="INTEGER"
+						keys="A_ID"
+						columns="A_ID; AGREEMENTS_COUNT; ACCEPTED_AGREEMENTS_COUNT; DECLINED_AGREEMENTS_COUNT; CONVERSATIONS_COUNT"
+						class="percentageRejected">
+						<div class="form-column">
+							<div>
+								<label class="percentageTitle">
+									{{ "DECLINED_AGREEMENTS_PERCENTAGE" | oTranslate }}
+								</label>
+								<br />
+								<label id="campo2" class="percentageLabel">
+									{{ dec_ags }}
+								</label>
+								<br />
+								<label id="percentageText" class="percentageLabel">
+									({{ declinedAgreementsPercentage }}%)
+								</label>
+							</div>
+						</div>
+					</o-form>
+				</div>
+				<div class="percentageDiv" id="pendingCount">
+					<o-form
+						show-header="no"
+						(onDataLoaded)="dataLoaded($event)"
+						service="announces"
+						entity="agreementsConversationsAnnounces"
+						parent-keys="A_ID"
+						keys-sql-types="INTEGER"
+						keys="A_ID"
+						columns="A_ID; AGREEMENTS_COUNT; ACCEPTED_AGREEMENTS_COUNT; DECLINED_AGREEMENTS_COUNT; CONVERSATIONS_COUNT"
+						class="pendingCount">
+						<div class="form-column">
+							<div>
+								<label class="percentageTitle">
+									{{ "PENDING_AGREEMENTS_PERCENTAGE" | oTranslate }}
+								</label>
+								<br />
+								<label id="campo3" class="percentageLabel">
+									{{ pen_ags }}
+								</label>
+							</div>
+						</div>
+					</o-form>
+				</div>
+				<div class="percentageDiv" id="conversationsCount">
+					<o-form
+						show-header="no"
+						(onDataLoaded)="dataLoaded($event)"
+						service="announces"
+						entity="agreementsConversationsAnnounces"
+						parent-keys="A_ID"
+						keys-sql-types="INTEGER"
+						keys="A_ID"
+						columns="A_ID; AGREEMENTS_COUNT; ACCEPTED_AGREEMENTS_COUNT; DECLINED_AGREEMENTS_COUNT; CONVERSATIONS_COUNT"
+						class="conversationsCount">
+						<div class="form-column">
+							<div>
+								<label class="percentageTitle">
+									{{ "CONVERSATIONS_COUNT_DETAIL" | oTranslate }}
+								</label>
+								<br />
+								<label id="campo3" class="percentageLabel">
+									{{ conv_count }}
+								</label>
+							</div>
+						</div>
+					</o-form>
+				</div>
+			</o-row>
+		</div>
+
+		<div class="finishedWorksDiv">
+			<hr />
+			<h2>{{ "FINISHEDWORKS" | oTranslate }}</h2>
+			<o-table
+				show-title="no"
+				title="FINISHEDWORKS"
+				detail-mode="none"
+				attr="servicesDetailStats"
+				columns="U_CLIENT;AG_PRICE;C_END_DATETIME;A_ID"
+				visible-columns="U_CLIENT;AG_PRICE;C_END_DATETIME"
+				service="announces"
+				entity="agreementsConversationsUserAnnounces"
+				keys="A_ID"
+				parent-keys="A_ID"
+				delete-button="no"
+				pagination-controls="no"
+				refresh-button="no"
+				insert-button="no">
+				<o-table-column
+					attr="AG_PRICE"
+					title="AG_PRICE"
+					type="currency"
+					thousand-separator="."
+					decimal-separator=","
+					currency-symbol="€"
+					currency-symbol-position="right"></o-table-column>
+				<o-table-column attr="C_END_DATETIME" type="date"></o-table-column>
+				<o-table-columns-grouping>
+					<o-table-columns-grouping-column
+						attr="AG_PRICE"
+						aggregate="sum"></o-table-columns-grouping-column>
+					<o-table-columns-grouping-column
+						attr="U_CLIENT"
+						aggregate="count"></o-table-columns-grouping-column>
+				</o-table-columns-grouping>
+				<o-table-column-aggregate attr="AG_PRICE" title="TOTAL"></o-table-column-aggregate>
+				<o-table-column-aggregate
+					attr="U_CLIENT"
+					aggregate="count"
+					title="COUNT"></o-table-column-aggregate>
+			</o-table>
+		</div>
+	</o-form>
+</div>

@@ -1,40 +1,50 @@
 /* You can add global styles to this file, and also import other style files */
-.o-form-layout-manager {
-  .o-form {
-    form {
-      height: 100%;
-    }
-  }
+
+.mat-button,
+.mat-flat-button,
+.mat-icon-button,
+.mat-raised-button,
+.mat-stroked-button {
+	display: none;
 }
 
-/* Form toolbar background color */
-.o-form-toolbar .o-form-toolbar-header.mat-toolbar {
-  background-color: transparent;
+.o-table .mat-table .mat-row:hover:not(.o-table-group-row) {
+	background: rgba(0, 0, 0, 0);
 }
 
-
-.o-column > div.o-container .o-container-scroll.o-container-gap,
-.o-row > div.o-container .o-container-scroll.o-container-gap {
-  padding: 15px;
+div#newAgreement button[attr="update"] {
+	display: none !important;
 }
 
-.avatar.o-image {
-  width: 200px;
-  height: 200px;
+.mat-toolbar-tools div {
+	padding-left: 1% !important;
+}
 
-  .o-image-content.o-image-auto-fit {
-    .o-image-display-container {
-      img {
-        border-radius: 50%;
-        aspect-ratio: auto 200/200;
-        width: 200px;
-        height: 200px;
-      }
-    }
+div.serviceDetailContainer ng-host {
+	overflow: hidden;
+}
 
-    .o-image-form-field {
-      position: absolute;
-      bottom: -42px;
-    }
-  }
+div.serviceDetailContainer div.o-container-scroll.o-scroll {
+	overflow: hidden;
+}
+
+div.announcesHomeContainer div.o-container-scroll.o-scroll {
+	overflow: hidden !important;
+}
+
+.announcesHomeContainer .mat-content span.ng-star-inserted {
+	font-weight: bold;
+	font-size: 20px !important;
+}
+
+.agreementsHistoryContainer {
+	margin-top: 1.5%;
+}
+
+.percentageDiv ng-host.scrolling.o-scroll {
+	overflow: hidden;
+}
+
+.alert-content mat-icon {
+	display: none;
 }

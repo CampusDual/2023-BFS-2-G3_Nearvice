@@ -23,42 +23,38 @@ ontimize:
     enable: true
     url: /export
   jdbc:
-    name-convention: lower
+    name-convention: upper
     sqlhandler: postgres
     sql-condition-processor:
       upper-string: true
       upper-like: true
   security:
     mode: default
-    ignore-paths: '/index.html,/app/**,/error,/test,/ontimize/health,/restapi/**,/swagger-ui/**'
+    ignore-paths: '/index.html,/app/**,/error,/test,/ontimize/health,/restapi/**,/swagger-ui/**,/registers/user'
     role-information-service:
-      role-repository: RoleDao
-      role-name-column: rol_name
+      role-repository: UserRoleDao
+      role-name-column: ROLENAME
       server-permission-query-id: serverPermissions
-      server-permission-name-column: srp_name
+      server-permission-name-column: PERMISSION_NAME
       client-permission-query-id: clientPermissions
-      client-permission-column: rol_xml_client_permission
+      client-permission-column: XMLCLIENTPERMISSION
     user-information-service:
       user-repository: UserDao
-      user-login-column: usr_login
-      user-password-column: usr_password
+      user-login-column: USER_
+      user-password-column: PASSWORD
       query-id: login
       other-data:
-        - usr_id
-        - usr_login
-        - usr_name
-        - usr_surname
-        - usr_email
-        - usr_notes
-        - usr_phone
-        - usr_creation_date
-        - usr_down_date
-        - usr_photo
+         - NAME
+         - SURNAME
+         - EMAIL
+         - USERBLOCKED
+         - LASTPASSWORDUPDATE
+         - FIRSTLOGIN
     user-role-information-service:
       user-role-repository: UserRoleDao
       query-id: userRole
-      role-login-column: usr_login
-      role-name-column: rol_name
+      role-login-column: USER_
+      role-name-column: ROLENAME
 server:
   port: 8080
   tomcat:

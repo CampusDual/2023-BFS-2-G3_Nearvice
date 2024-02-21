@@ -1,101 +1,89 @@
-import { DomSanitizer } from '@angular/platform-browser';
-import { Component, Inject, OnInit, ViewEncapsulation } from '@angular/core';
-import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
-import { AuthService, NavigationService, ServiceResponse, OUserInfoService } from 'ontimize-web-ngx';
-import { Observable } from 'rxjs';
-import { MainService } from '../shared/services/main.service';
-import { UserInfoService } from '../shared/services/user-info.service';
+import { Component, Inject, Injector, OnInit, ViewEncapsulation } from "@angular/core";
+import { FormControl, FormGroup, Validators } from "@angular/forms";
+import { MatDialog } from "@angular/material";
+import { ActivatedRoute, Router } from "@angular/router";
+import { AuthService, LocalStorageService, NavigationService } from "ontimize-web-ngx";
+import { Observable } from "rxjs";
+import { RegisterHomeComponent } from "../main/register/register-home/register-home.component";
 
 @Component({
-  selector: 'login',
-  styleUrls: ['./login.component.scss'],
-  templateUrl: './login.component.html',
-  encapsulation: ViewEncapsulation.None
+	selector: "login",
+	styleUrls: ["./login.component.scss"],
+	templateUrl: "./login.component.html",
+	encapsulation: ViewEncapsulation.None,
 })
 export class LoginComponent implements OnInit {
-  public loginForm: UntypedFormGroup = new UntypedFormGroup({});
-  public userCtrl: UntypedFormControl = new UntypedFormControl('', Validators.required);
-  public pwdCtrl: UntypedFormControl = new UntypedFormControl('', Validators.required);
+	loginForm: FormGroup = new FormGroup({});
+	userCtrl: FormControl = new FormControl("", Validators.required);
+	pwdCtrl: FormControl = new FormControl("", Validators.required);
+	sessionExpired = false;
 
-  public sessionExpired = false;
-  private redirect = '/main';
+	router: Router;
 
-  constructor(
-    private actRoute: ActivatedRoute,
-    private router: Router,
-    @Inject(NavigationService) private navigationService: NavigationService,
-    @Inject(AuthService) private authService: AuthService,
-    @Inject(MainService) private mainService: MainService,
-    @Inject(OUserInfoService) private oUserInfoService: OUserInfoService,
-    @Inject(UserInfoService) private userInfoService: UserInfoService,
-    @Inject(DomSanitizer) private domSanitizer: DomSanitizer
-  ) {
-    const qParamObs: Observable<any> = this.actRoute.queryParams;
-    qParamObs.subscribe(params => {
-      if (params) {
-        if (params['session-expired']) {
-          this.sessionExpired = (params['session-expired'] === 'true');
-        } else {
-          if (params['redirect']) {
-            this.redirect = params['redirect'];
-          }
-          this.sessionExpired = false;
-        }
-      }
-    });
-  }
+	constructor(
+		protected dialog: MatDialog,
+		private actRoute: ActivatedRoute,
+		router: Router,
+		@Inject(NavigationService) public navigation: NavigationService,
+		@Inject(AuthService) private authService: AuthService,
+		@Inject(LocalStorageService) private localStorageService,
+		public injector: Injector
+	) {
+		this.router = router;
 
-  ngOnInit(): any {
-    this.navigationService.setVisible(false);
+		const qParamObs: Observable<any> = this.actRoute.queryParams;
+		qParamObs.subscribe((params) => {
+			if (params) {
+				const isDetail = params["session-expired"];
+				if (isDetail === "true") {
+					this.sessionExpired = true;
+				} else {
+					this.sessionExpired = false;
+				}
+			}
+		});
+	}
 
-    this.loginForm.addControl('username', this.userCtrl);
-    this.loginForm.addControl('password', this.pwdCtrl);
+	ngOnInit(): any {
+		this.navigation.setVisible(false);
 
-    if (this.authService.isLoggedIn()) {
-      this.router.navigate([this.redirect]);
-    } else {
-      this.authService.clearSessionData();
-    }
-  }
+		this.loginForm.addControl("username", this.userCtrl);
+		this.loginForm.addControl("password", this.pwdCtrl);
 
-  public login() {
-    const userName = this.loginForm.value.username;
-    const password = this.loginForm.value.password;
-    if (userName && userName.length > 0 && password && password.length > 0) {
-      const self = this;
-      this.authService.login(userName, password)
-        .subscribe(() => {
-          self.sessionExpired = false;
-          this.loadUserInfo();
-          self.router.navigate([this.redirect]);
-        }, this.handleError);
-    }
-  }
+		if (this.authService.isLoggedIn()) {
+			this.router.navigate(["../"], { relativeTo: this.actRoute });
+		} else {
+			this.authService.clearSessionData();
+		}
+	}
 
-  private loadUserInfo() {
-    this.mainService.getUserInfo()
-      .subscribe(
-        (result: ServiceResponse) => {
-          this.userInfoService.storeUserInfo(result.data);
-          let avatar = './assets/images/user_profile.png';
-          if (result.data['usr_photo']) {
-            (avatar as any) = this.domSanitizer.bypassSecurityTrustResourceUrl('data:image/*;base64,' + result.data['usr_photo']);
-          }
-          this.oUserInfoService.setUserInfo({
-            username: result.data['usr_name'],
-            avatar: avatar
-          });
-        }
-      );
-  }
+	login() {
+		const userName = this.loginForm.value.username;
+		const password = this.loginForm.value.password;
+		if (userName && userName.length > 0 && password && password.length > 0) {
+			const self = this;
+			this.authService.login(userName, password).subscribe(() => {
+				self.sessionExpired = false;
+				self.router.navigate(["../"], { relativeTo: this.actRoute });
+			}, this.handleError);
+		}
+	}
 
-  private handleError(error) {
-    switch (error.status) {
-      case 401:
-        console.error('Email or password is wrong.');
-        break;
-      default: break;
-    }
-  }
+	handleError(error) {
+		switch (error.status) {
+			case 401:
+				console.error("Email or password is wrong.");
+				break;
+			default:
+				break;
+		}
+	}
+
+	public openRegister(): void {
+		this.dialog.open(RegisterHomeComponent, {
+			disableClose: true,
+			height: "600px",
+			width: "500px",
+		});
+	}
 }

@@ -6,7 +6,7 @@ import { SERVICE_CONFIG } from './shared/app.services.config';
 
 export const CONFIG: Config = {
   // The base path of the URL used by app services.
-  apiEndpoint:  (window['__env'] !== undefined) ? window['__env']['apiUrl'] : environment.apiEndpoint,
+  apiEndpoint: (window['__env'] !== undefined) ? window['__env']['apiUrl'] : environment.apiEndpoint,
 
   // Application identifier. Is the unique package identifier of the app.
   // It is used when storing or managing temporal data related with the app.
@@ -17,7 +17,7 @@ export const CONFIG: Config = {
   title: 'JEE seed',
 
   // Language of the application.
-  locale: 'en',
+  locale: 'es',
 
   // The service type used (Ontimize REST standart, Ontimize REST JEE
   // or custom implementation) in the whole application.
@@ -30,12 +30,11 @@ export const CONFIG: Config = {
 
   applicationLocales: ['es', 'en'],
 
-  permissionsServiceType: 'OntimizeEEPermissions' /* Optional, OntimizeEEPermissions is the default value */,
   permissionsConfiguration: {
     service: 'permissions',
   },
 
   exportConfiguration: {
-    path:'/export'
- }
+    path: '/export'
+  }
 };

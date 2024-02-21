@@ -1,0 +1,88 @@
+.o-map {
+	display: flex;
+	height: 400px;
+	width: 100%;
+	border: #ffc847 solid 3px;
+	border-radius: 15px;
+	overflow: hidden;
+}
+
+/* Estilos generales para el contenedor */
+.announce-detail {
+	font-family: "Arial", sans-serif;
+	color: #333;
+	padding: 20px;
+	border-radius: 5px;
+	min-width: 0 !important;
+}
+
+/* Mejorar el título */
+.announce-title {
+	font-size: 1.5em;
+	color: black;
+	margin-bottom: 10px;
+	text-align: center;
+	font-weight: bold;
+}
+
+/* Estilos para la descripción */
+.announce-description {
+	font-size: 1em;
+	color: #666;
+	margin-bottom: 20px;
+}
+
+/* Estilos para el nombre y el correo electrónico */
+.user-name b,
+.user-email mat-icon {
+	color: #ffc847;
+}
+
+/* Estilos para los botones */
+.o-form-toolbar-button,
+.mat-stroked-button {
+	background-color: #ffc847;
+	color: white;
+	border: none;
+	padding: 10px 20px;
+	text-transform: uppercase;
+	border-radius: 3px;
+	transition: background-color 0.3s ease;
+}
+
+.o-form-toolbar-button:hover,
+.mat-stroked-button:hover {
+	background-color: #cea139;
+}
+
+.btn {
+	width: 100%;
+	height: 50px;
+	font-size: 1.2em;
+	font-weight: bold;
+	margin-top: 40px;
+}
+
+.description {
+	height: 300px;
+	overflow: auto;
+	margin-bottom: 10px;
+	justify-content: space-evenly;
+}
+
+.info {
+	margin-top: 20px;
+	margin-right: 70px;
+}
+
+.mat-form-field-infix {
+	background-color: #cea139 !important;
+	resize: none;
+}
+
+/* Estilos para la responsividad */
+@media (max-width: 768px) {
+	.announce-detail {
+		padding: 10px;
+	}
+}

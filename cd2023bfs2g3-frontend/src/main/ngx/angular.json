@@ -35,12 +35,23 @@
               "src/assets",
               {
                 "glob": "**/*",
+                "input": "node_modules/leaflet/dist/images",
+                "output": "/assets"
+              },
+              {
+                "glob": "**/*",
                 "input": "node_modules/ontimize-web-ngx/assets",
+                "output": "/assets"
+              },
+              {
+                "glob": "**/*",
+                "input": "node_modules/ontimize-web-ngx-report/assets",
                 "output": "/assets"
               },
               "src/manifest.webmanifest"
             ],
             "styles": [
+              "node_modules/ontimize-web-ngx-map/styles.scss",
               "node_modules/ontimize-web-ngx/ontimize.scss",
               "src/assets/css/app.scss",
               "src/styles.scss"
@@ -51,14 +62,7 @@
             "buildOptimizer": false,
             "sourceMap": true,
             "optimization": false,
-            "namedChunks": true,
-            "allowedCommonJsDependencies": [
-              "dom-to-image",
-              "google-libphonenumber",
-              "moment",
-              "js-sha256",
-              "base64-js"
-            ]
+            "namedChunks": true
           },
           "configurations": {
             "compose": {
@@ -254,6 +258,7 @@
           }
         }
       }
-    }},
+    }
+  },
   "defaultProject": "app"
 }

@@ -1,22 +1,30 @@
-import { NgModule } from '@angular/core';
-import { ExtraOptions, RouterModule, Routes } from '@angular/router';
-import { AuthGuardService } from 'ontimize-web-ngx';
+import { NgModule } from "@angular/core";
+import { RouterModule, Routes } from "@angular/router";
 
 export const routes: Routes = [
-  { path: 'main', canActivate: [AuthGuardService], loadChildren: () => import('./main/main.module').then(m => m.MainModule) },
-  { path: 'login', loadChildren: () => import('./login/login.module').then(m => m.LoginModule) },
-  { path: '**', redirectTo: 'main', pathMatch: 'full' },
-  { path: '', redirectTo: 'main', pathMatch: 'full' }
+	{
+		path: "main",
+		loadChildren: () => import("./main/main.module").then((m) => m.MainModule),
+	},
+	{
+		path: "login",
+		loadChildren: () => import("./login/login.module").then((m) => m.LoginModule),
+	},
+	{
+		path: "register",
+		loadChildren: () => import("./main/register/register.module").then((m) => m.RegisterModule),
+	},
+	{ path: "", redirectTo: "main", pathMatch: "full" },
 ];
 
-const opt: ExtraOptions = {
-  enableTracing: false
-  // true if you want to print navigation routes
+const opt = {
+	enableTracing: false,
+	// true if you want to print navigation routes
 };
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, opt)],
-  exports: [RouterModule],
-  providers: []
+	imports: [RouterModule.forRoot(routes, opt)],
+	exports: [RouterModule],
+	providers: [],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

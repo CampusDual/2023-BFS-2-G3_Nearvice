@@ -1,0 +1,138 @@
+.form-container {
+	max-width: 600px;
+	margin: 0 auto;
+	margin-top: 25px;
+	border: 1px solid #ccc;
+	border-radius: 10px;
+	padding: 20px;
+	background-color: white;
+}
+
+.form-status-accepted {
+	animation: pulse-accepted 2s infinite;
+	border: 1px solid green;
+}
+
+.form-status-declined {
+	animation: pulse-declined 2s infinite;
+	border: 1px solid red;
+}
+
+.form-status-pending {
+	animation: pulse-pending 2s infinite;
+	border: 1px solid orange;
+}
+
+.form-row {
+	display: flex;
+	justify-content: space-between;
+	margin-bottom: 20px;
+}
+
+.form-group {
+	margin-bottom: 20px;
+}
+
+label {
+	display: block;
+	font-weight: bold;
+}
+
+textarea,
+input[type="text"],
+input[type="number"],
+input[type="date"],
+input[type="time"] {
+	width: calc(100% - 20px);
+	padding: 8px;
+	border: 1px solid #ccc;
+	border-radius: 5px;
+	font-size: 14px;
+	margin-top: 5px;
+}
+
+.price-input {
+	display: flex;
+	align-items: center;
+	justify-content: flex-end;
+}
+
+.euro-symbol {
+	margin-left: 5px;
+}
+.btn-style:hover {
+	background-color: #b0d5e6;
+	box-shadow: 0px 2px 15px rgba(0, 0, 0, 0.3);
+}
+.btn-style {
+	color: black;
+	background-color: #b0d5e6;
+	border-radius: 10px;
+	width: auto;
+	margin-left: 25px;
+	margin-right: 25px;
+}
+textarea {
+	cursor: pointer;
+}
+.content-buttons {
+	display: flex;
+	justify-content: center;
+}
+
+.status {
+	margin-top: 20px;
+	display: flex;
+	align-content: center;
+}
+
+.status-accepted {
+	color: green;
+	font-weight: bold;
+}
+
+.status-declined {
+	color: red;
+	font-weight: bold;
+}
+
+.status-pending {
+	color: orange;
+	font-weight: bold;
+}
+
+@keyframes pulse-accepted {
+	0% {
+		box-shadow: 0 0 0 0 rgba(44, 204, 71, 0.4);
+	}
+	70% {
+		box-shadow: 0 0 0 20px rgba(204, 169, 44, 0);
+	}
+	100% {
+		box-shadow: 0 0 0 0 rgba(204, 169, 44, 0);
+	}
+}
+
+@keyframes pulse-declined {
+	0% {
+		box-shadow: 0 0 0 0 rgba(204, 44, 44, 0.4);
+	}
+	70% {
+		box-shadow: 0 0 0 20px rgba(204, 169, 44, 0);
+	}
+	100% {
+		box-shadow: 0 0 0 0 rgba(204, 169, 44, 0);
+	}
+}
+
+@keyframes pulse-pending {
+	0% {
+		box-shadow: 0 0 0 0 rgba(204, 169, 44, 0.4);
+	}
+	70% {
+		box-shadow: 0 0 0 20px rgba(204, 169, 44, 0);
+	}
+	100% {
+		box-shadow: 0 0 0 0 rgba(204, 169, 44, 0);
+	}
+}

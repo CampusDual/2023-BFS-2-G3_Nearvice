@@ -1,0 +1,185 @@
+.o-form {
+	background-color: #fff;
+	border: 1px solid #ccc;
+	border-radius: 8px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+	padding: 20px;
+	max-width: 90%;
+	height: auto;
+	margin: 0 auto;
+	margin-top: 25px;
+}
+
+.serviceDetailContainer {
+	overflow: hidden;
+}
+
+.o-integer-input,
+.o-combo,
+.o-text-input,
+.o-textarea-input,
+.o-checkbox {
+	margin-bottom: 15px;
+}
+
+.o-integer-input,
+.o-text-input,
+.o-textarea-input {
+	width: 100%;
+}
+
+.o-form-toolbar-button-insert {
+	background-color: #007bff;
+	color: #fff;
+	border: none;
+	padding: 10px 20px;
+	border-radius: 4px;
+	cursor: pointer;
+}
+.mapDetailService {
+	z-index: 1;
+	border: 3px solid #ffc847;
+	height: 350px;
+	width: 85%;
+}
+.marker {
+	z-index: 2;
+}
+
+.serviceDetailMapContainer {
+	display: flex;
+	align-self: flex-end;
+	flex-direction: column;
+	margin-left: 5%;
+}
+
+.serviceDetailMapContainer span {
+	display: block;
+	margin-bottom: 10px;
+}
+
+#serviceDetailFormData {
+	height: 3vh;
+	margin-top: 0.6vh;
+}
+
+.serviceDetailEditableContainer {
+	margin-top: 1vh;
+	margin-bottom: 4vh;
+	width: 105%;
+}
+
+.form-row {
+	display: flex;
+	flex-wrap: wrap;
+	margin-bottom: 15px;
+}
+
+.form-column {
+	flex-basis: 100%;
+	margin-bottom: 15px; /* Espacio entre las filas */
+}
+
+label {
+	display: block;
+	font-weight: bold;
+	margin-bottom: 5px;
+}
+
+.form-row label {
+	flex-basis: calc(50% - 10px);
+	margin-bottom: 0;
+	margin-right: 10px; /* Separación entre elementos en la misma fila */
+}
+
+/* Estilos para organizar en dos columnas */
+@media (min-width: 600px) {
+	.form-row label {
+		flex-basis: auto;
+		margin-bottom: 5px;
+		margin-right: 10px; /* Separación entre elementos en la misma fila en pantallas más grandes */
+	}
+
+	.form-row label:last-child {
+		margin-right: 0; /* Reinicia el margen derecho en el último elemento en pantallas más grandes */
+	}
+}
+
+.percentageDiv {
+	width: 50%;
+	height: 61%;
+}
+
+.percentageAccepted {
+	background-color: #89d07e;
+	width: 65%;
+	margin-right: -5%;
+	border: 1px solid green;
+}
+
+.percentageRejected {
+	background-color: #ff574d;
+	width: 65%;
+	border: 1px solid red;
+}
+
+.pendingCount {
+	background-color: #ffb347;
+	width: 65%;
+	margin-left: -5%;
+	border: 1px solid #ff9900;
+	height: 100%;
+}
+
+.conversationsCount {
+	background-color: #cfcfc4;
+	width: 65%;
+	margin-left: -21.2%;
+	border: 1px solid #a1a198;
+	height: 100%;
+}
+
+@media (max-width: 1525px) {
+	.conversationsCount {
+		margin-left: -18%;
+		width: 68%;
+	}
+
+	.percentageDiv {
+		height: 65%;
+	}
+}
+
+.percentageContainer {
+	margin-bottom: 3%;
+	margin-left: 4%;
+}
+
+.percentageLabel {
+	font-size: 27px;
+	margin-top: -5%;
+	text-align: center;
+	font-weight: bolder;
+}
+
+#percentageText {
+	font-size: 20px;
+}
+
+.percentageTitle {
+	text-align: center;
+	margin-top: -5%;
+	font-size: large;
+}
+
+.finishedWorksDiv h2 {
+	text-align: center;
+	margin-top: 5%;
+}
+
+/* Agrega algún estilo adicional según tus preferencias */
+body {
+	font-family: "Arial", sans-serif;
+	background-color: #f4f4f4;
+	margin: 20px;
+}

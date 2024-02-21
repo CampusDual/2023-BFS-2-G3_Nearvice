@@ -1,0 +1,126 @@
+<div class="padding-bottom container" #scroll>
+	<o-form
+		#formM
+		show-header="no"
+		undo-button="no"
+		layout-direction="column"
+		service="conversations"
+		entity="conversation"
+		keys-sql-types="INTEGER"
+		keys="C_ID"
+		(onDataLoaded)="getData($event)"
+		columns="C_ID; USER_; U_CLIENT;A_TITLE;S_NAME;C_ACTIVE">
+		<div class="custom-container">
+			<o-text-input
+				hidden
+				*ngIf="professionalCondition"
+				#inputP
+				fxFlex="10%"
+				label="PROFESSIONAL"
+				attr="USER_"
+				read-only="yes"
+				id="professional"></o-text-input>
+			<o-text-input
+				hidden
+				*ngIf="clientCondition"
+				#inputC
+				fxFlex="10%"
+				attr="U_CLIENT"
+				read-only="yes"
+				id="client"></o-text-input>
+			<div class="chatHeader">
+				<div *ngIf="professionalCondition" #chatItem>
+					<label style="font-weight: bold">{{ "PROFESSIONAL_WITH_SPACE" | oTranslate }}</label>
+					<label>{{ user_ | oTranslate }}</label>
+				</div>
+				<div *ngIf="clientCondition">
+					<label style="font-weight: bold">{{ "U_CLIENT_WITH_SPACE" | oTranslate }}</label>
+					<label>{{ u_client | oTranslate }}</label>
+				</div>
+
+				<div>
+					<label style="font-weight: bold">{{ "A_TITLE_WITH_SPACE" | oTranslate }}</label>
+					<label>{{ a_title | oTranslate }}</label>
+				</div>
+
+				<div>
+					<label style="font-weight: bold">{{ "S_NAME_WITH_SPACE" | oTranslate }}</label>
+					<label>{{ s_name | oTranslate }}</label>
+				</div>
+			</div>
+			<div class="chatHeaderButtons">
+				<div *ngIf="isConversationActive">
+					<button
+						class="btn-style archive"
+						id="archiveButton"
+						mat-stroked-button=""
+						type="button"
+						ng-reflect-color="primary"
+						(click)="archiveConversation()">
+						<span class="mat-button-wrapper">
+							<span class="ng-star-inserted">{{ "ARCHIVE" | oTranslate }}</span>
+						</span>
+					</button>
+				</div>
+				<app-agreements-navigation [data]="{ CLIENT: u_client }"></app-agreements-navigation>
+				<app-works-navigation [data]="{ CLIENT: u_client }"></app-works-navigation>
+			</div>
+		</div>
+		<o-list
+			class="listChat"
+			pagination-controls="no"
+			#chatList
+			parent-keys="C_ID"
+			columns="M_MESSAGE;M_DATETIME;U_EMITTER"
+			service="messages"
+			entity="message"
+			sort-columns="M_DATETIME"
+			delete-button="no"
+			refresh-button="no"
+			[query-rows]="rowsToQuery"
+			(onDataLoaded)="dinamicQueryRows($event)">
+			<div class="chatContainer">
+				<div *ngFor="let row of chatList.dataArray" [ngClass]="getChatMessageStyles(row)">
+					<div class="userChat" [ngStyle]="uEmitterStyles(row)" #elem>{{ row.U_EMITTER }}</div>
+					<div class="messageChat">{{ row.M_MESSAGE }}</div>
+					<div class="dateTimeChat">
+						{{ row.M_DATETIME | date : "dd-MM-yyyy hh:mm" }}
+					</div>
+				</div>
+			</div>
+		</o-list>
+	</o-form>
+</div>
+<o-form
+	#formchat
+	class="formChat"
+	after-insert-mode="new"
+	service="messages"
+	entity="message"
+	show-header="no"
+	undo-button="no"
+	layout-direction="column"
+	keys-sql-types="INTEGER">
+	<div class="messageAndBtn">
+		<o-text-input
+			label="M_MESSAGE"
+			enabled="yes"
+			attr="M_MESSAGE"
+			(keyup.enter)="messageSend()"
+			class="textInputMessage"></o-text-input>
+		<o-integer-input id="cid" attr="C_ID" enabled="no" [data]="c_id" hidden></o-integer-input>
+		<div class="cont-btn">
+			<button
+				class="o-form-toolbar-button o-form-toolbar-button-insert mat-stroked-button mat-button-base mat-primary ng-star-inserted btn-style"
+				color="primary"
+				mat-stroked-button=""
+				type="button"
+				ng-reflect-color="primary"
+				(click)="messageSend()">
+				<span class="mat-button-wrapper">
+					<span class="ng-star-inserted">{{ "SEND" | oTranslate }}</span>
+				</span>
+			</button>
+		</div>
+	</div>
+</o-form>

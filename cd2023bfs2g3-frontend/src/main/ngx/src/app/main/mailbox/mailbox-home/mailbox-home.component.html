@@ -1,0 +1,160 @@
+<div style="display: flex">
+	<o-form
+		fxFlex="50"
+		show-header="no"
+		service="conversations"
+		entity="conversationMessageReceiver"
+		keys="C_ID"
+		(onDataLoaded)="clientIsEmpty($event)"
+		hidden
+		*ngIf="showClientList">
+		<o-column-collapsible
+			title="{{ 'FILTERS_MAILBOX_HOME' | oTranslate }}"
+			appearance="outline"
+			expanded="no">
+			<o-column fxFlex="50">
+				<o-combo
+					#conversationStatus
+					attr="conversationStatus2"
+					label="{{ 'DEFAULT_CONVERSATION_FILTER' | oTranslate }}"
+					label-visible="no"
+					null-selection="yes"
+					[static-data]="conversationArray"
+					[data]="selectedConversationStatusCode"
+					value-column="conversationStatusCode"
+					visible-columns="conversationStatus"
+					required="no"
+					searchable="yes"
+					null-selection-label="{{ 'DEFAULT_CONVERSATION_FILTER' | oTranslate }}"
+					fxFlex
+					placeholder="{{ 'FILTERS_MAILBOX_HOME' | oTranslate }}"></o-combo>
+				<o-button
+					attr="filter"
+					[oFilterBuilderQuery]="filterBuilder"
+					type="RAISED"
+					label="FILTER"
+					class="filter-button"></o-button>
+			</o-column>
+		</o-column-collapsible>
+		<o-filter-builder
+			#filterBuilder
+			attr="thefilter"
+			filters="CONV_STATUS:conversationStatus2"
+			[target]="clientConversation"
+			[expression-builder]="createFilter"
+			query-on-change="no"
+			query-on-change-delay="500"></o-filter-builder>
+		<o-list
+			#clientConversation
+			service="conversations"
+			entity="conversationMessageReceiver"
+			keys="C_ID"
+			columns="M_ID;U_CLIENT;M_MESSAGE;C_ID;A_TITLE;S_NAME;C_ACTIVE"
+			title="{{ 'RECEIVED_MESSAGES' | oTranslate }}"
+			quick-filter="true"
+			quick-filter-columns="S_NAME;U_CLIENT"
+			refresh-button="true"
+			insert-button="false"
+			delete-button="false"
+			detail-mode="click"
+			selectable="false"
+			dense="false"
+			keys-sql-types="INTEGER"
+			detail-button-in-row="false"
+			detail-button-in-row-icon="chevron_right"
+			edit-button-in-row="false"
+			edit-button-in-row-icon="edit">
+			<mat-card *ngFor="let row of clientConversation.dataArray" [o-list-item]="row">
+				<mat-card-header>
+					<mat-card-title>{{ row.A_TITLE }}</mat-card-title>
+					<mat-card-subtitle icon="mail">
+						{{ row.M_MESSAGE }}
+					</mat-card-subtitle>
+
+					<span class="client-name">
+						{{ row.U_CLIENT }}
+					</span>
+				</mat-card-header>
+			</mat-card>
+		</o-list>
+	</o-form>
+
+	<o-form
+		show-header="no"
+		service="conversations"
+		entity="conversationMessageEmitter"
+		keys="C_ID"
+		hidden
+		(onDataLoaded)="professionalIsEmpty($event)"
+		*ngIf="showProfessionalList">
+		<o-column-collapsible
+			title="{{ 'FILTERS_MAILBOX_HOME' | oTranslate }}"
+			appearance="outline"
+			expanded="no">
+			<o-column fxFlex="50">
+				<o-combo
+					#conversationStatus
+					attr="conversationStatus2"
+					label="{{ 'DEFAULT_CONVERSATION_FILTER' | oTranslate }}"
+					label-visible="no"
+					null-selection="yes"
+					[static-data]="conversationArray"
+					[data]="selectedConversationStatusCode"
+					value-column="conversationStatusCode"
+					visible-columns="conversationStatus"
+					required="no"
+					searchable="yes"
+					null-selection-label="{{ 'DEFAULT_CONVERSATION_FILTER' | oTranslate }}"
+					fxFlex
+					placeholder="{{ 'FILTERS_MAILBOX_HOME' | oTranslate }}"></o-combo>
+				<o-button
+					attr="filter"
+					[oFilterBuilderQuery]="filterBuilder2"
+					type="RAISED"
+					label="FILTER"
+					class="filter-button"></o-button>
+			</o-column>
+		</o-column-collapsible>
+		<o-filter-builder
+			#filterBuilder2
+			attr="thefilter"
+			filters="CONV_STATUS:conversationStatus2"
+			[target]="professionalConversation"
+			[expression-builder]="createFilter"
+			query-on-change="no"
+			query-on-change-delay="500"></o-filter-builder>
+		<o-list
+			#professionalConversation
+			service="conversations"
+			entity="conversationMessageEmitter"
+			keys="C_ID"
+			columns="M_ID;U_EMITTER;M_MESSAGE;C_ID;USER_;A_TITLE;S_NAME;C_ACTIVE"
+			title="{{ 'SENT_MESSAGES' | oTranslate }}"
+			quick-filter="true"
+			quick-filter-columns="S_NAME;U_CLIENT"
+			refresh-button="true"
+			insert-button="false"
+			delete-button="false"
+			detail-mode="click"
+			selectable="false"
+			dense="false"
+			keys-sql-types="INTEGER"
+			detail-button-in-row="false"
+			detail-button-in-row-icon="chevron_right"
+			edit-button-in-row="false"
+			edit-button-in-row-icon="edit">
+			<mat-card *ngFor="let row of professionalConversation.dataArray" [o-list-item]="row">
+				<mat-card-header>
+					<mat-card-title>{{ row.A_TITLE }}</mat-card-title>
+					<mat-card-subtitle icon="mail">
+						{{ row.M_MESSAGE }}
+					</mat-card-subtitle>
+
+					<span class="client-name">
+						{{ row.USER_ }}
+					</span>
+				</mat-card-header>
+			</mat-card>
+		</o-list>
+	</o-form>
+</div>

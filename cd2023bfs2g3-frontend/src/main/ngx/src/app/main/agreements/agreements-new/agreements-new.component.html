@@ -1,0 +1,33 @@
+<div class="form-container" id="newAgreement">
+	<o-form
+		#agreementForm
+		entity="agreement"
+		service="agreements"
+		undo-button="no"
+		label-header="NEW_AGREEMENT"
+		label-header-align="start">
+		<div class="form-group">
+			<o-integer-input attr="C_ID" [data]="c_id" hidden></o-integer-input>
+			<o-textarea-input
+				attr="AG_DESCRIPTION"
+				id="observaciones"
+				name="observaciones"
+				rows="4"
+				required="yes"></o-textarea-input>
+		</div>
+		<div class="form-group">
+			<div class="price-input">
+				<o-real-input
+					attr="AG_PRICE"
+					type="number"
+					id="precio"
+					name="precio"
+					required="yes"></o-real-input>
+				<span class="euro-symbol">€</span>
+			</div>
+		</div>
+		<button type="submit" (click)="offerSend()" class="btn-style">
+			{{ "SEND_OFFER" | oTranslate }}
+		</button>
+	</o-form>
+</div>

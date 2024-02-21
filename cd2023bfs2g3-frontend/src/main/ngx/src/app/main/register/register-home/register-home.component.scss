@@ -1,0 +1,43 @@
+.o-form {
+	background-color: #fff;
+	border-radius: 8px;
+	max-width: 80%;
+	height: auto;
+	margin: 0 auto;
+	margin-top: 25px;
+}
+
+.o-integer-input,
+.o-combo,
+.o-text-input,
+.o-textarea-input,
+.o-checkbox {
+	margin-bottom: 15px;
+}
+
+.o-integer-input,
+.o-text-input,
+.o-textarea-input {
+	width: 100%;
+}
+
+.o-form-toolbar-button-insert {
+	background-color: #007bff;
+	color: #fff;
+	border: none;
+	padding: 10px 20px;
+	border-radius: 4px;
+	cursor: pointer;
+}
+
+.login-form {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.login-column {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}

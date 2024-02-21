@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<JdbcEntitySetup
+        xmlns="http://www.ontimize.com/schema/jdbc"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.ontimize.com/schema/jdbc http://www.ontimize.com/schema/jdbc/ontimize-jdbc-dao.xsd"
+        catalog="" table="ANNOUNCES"
+        datasource="mainDataSource" sqlhandler="dbSQLStatementHandler">
+    <DeleteKeys>
+        <Column>A_ID</Column>
+    </DeleteKeys>
+    <UpdateKeys>
+        <Column>A_ID</Column>
+    </UpdateKeys>
+    <Queries>
+        <Query id="default">
+            <AmbiguousColumns>
+                <AmbiguousColumn name="S_ID" prefix="A" databaseName="S_ID"/>
+            </AmbiguousColumns>
+            <Sentence>
+                <![CDATA[
+                    SELECT
+                        #COLUMNS#
+                    FROM ANNOUNCES A
+                    INNER JOIN SERVICES S ON A.S_ID = S.S_ID
+                    #WHERE#
+                ]]>
+            </Sentence>
+        </Query>
+        <Query id="activeAnnounces">
+            <AmbiguousColumns>
+                <AmbiguousColumn name="S_ID" prefix="A" databaseName="S_ID"/>
+            </AmbiguousColumns>
+            <Sentence>
+                <![CDATA[
+                    WITH TEMPORAL AS (
+                    SELECT A.*, S.S_NAME
+                    FROM ANNOUNCES A
+                    INNER JOIN SERVICES S ON A.S_ID = S.S_ID
+                    WHERE
+                        A.A_ACTIVE
+                    )
+                    SELECT #COLUMNS# FROM TEMPORAL
+                    #WHERE#
+                ]]>
+            </Sentence>
+        </Query>
+        <Query id="allDetailAnnounces">
+            <AmbiguousColumns>
+                <AmbiguousColumn name="S_ID" prefix="A" databaseName="S_ID"/>
+            </AmbiguousColumns>
+            <Sentence>
+                <![CDATA[
+                    WITH TEMPORAL AS (
+                        SELECT
+                            A.*, S.S_NAME, U.NAME, U.SURNAME, U.EMAIL
+                        FROM ANNOUNCES A
+                        INNER JOIN SERVICES S ON A.S_ID = S.S_ID
+                        INNER JOIN TUSER U ON U.USER_ = A.USER_
+                        WHERE A.A_ACTIVE
+                    )
+                    SELECT #COLUMNS#
+                    FROM TEMPORAL
+                    #WHERE#
+                ]]>
+            </Sentence>
+        </Query>
+        <Query id="agreementsConversationsAnnounces">
+            <AmbiguousColumns>
+                <AmbiguousColumn name="A_ID" prefix="A"/>
+                <AmbiguousColumn name="A_TITLE" prefix="A"/>
+            </AmbiguousColumns>
+            <Sentence>
+                <![CDATA[
+				SELECT
+                    A.A_ID, COUNT(AG.AG_ID) AS AGREEMENTS_COUNT, COUNT(DISTINCT C.C_ID) AS CONVERSATIONS_COUNT, S.S_NAME, A.A_TITLE, A.A_ACTIVE,
+                    SUM(CASE WHEN AG.AG_ACCEPTED = true THEN 1 ELSE 0 END) AS ACCEPTED_AGREEMENTS_COUNT, SUM(CASE WHEN AG.AG_ACCEPTED = false THEN 1 ELSE 0 END) AS DECLINED_AGREEMENTS_COUNT
+                FROM ANNOUNCES A
+                INNER JOIN SERVICES S ON A.S_ID = S.S_ID
+                LEFT JOIN CONVERSATIONS C ON A.A_ID = C.A_ID
+                LEFT JOIN AGREEMENTS AG ON C.C_ID = AG.C_ID
+                #WHERE#
+                GROUP BY A.A_ID, S.S_NAME, A.A_TITLE, A.A_ACTIVE;
+                ]]>
+            </Sentence>
+        </Query>
+        <Query id="agreementsConversationsUserAnnounces">
+            <AmbiguousColumns>
+                <AmbiguousColumn name="C_ID" prefix="C"/>
+            </AmbiguousColumns>
+            <Sentence>
+                <![CDATA[
+                WITH TEMPORAL AS (
+                select *
+                from conversations c
+                inner join agreements AG on AG.c_id = C.c_id
+                where c.c_end_datetime is not null
+                and AG.ag_accepted = TRUE
+                )
+                select #COLUMNS#
+                from TEMPORAL T
+                #WHERE#
+                ]]>
+            </Sentence>
+        </Query>
+    </Queries>
+</JdbcEntitySetup>

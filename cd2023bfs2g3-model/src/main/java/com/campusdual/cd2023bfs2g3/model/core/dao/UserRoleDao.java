@@ -14,8 +14,4 @@ import com.ontimize.jee.server.dao.jdbc.OntimizeJdbcDaoSupport;
 	configurationFile = "dao/UserRoleDao.xml",
 	configurationFilePlaceholder = "dao/placeholders.properties")
 public class UserRoleDao extends OntimizeJdbcDaoSupport {
-	public static final String URO_ID       = "uro_id";
-	public static final String USR_ID       = "usr_id";
-	public static final String ROL_ID       = "rol_id";
-	public static final String ACTIVED      = "actived";
 }
